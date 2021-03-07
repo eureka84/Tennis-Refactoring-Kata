@@ -9,25 +9,23 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
         if (playerName === player1Name) {
             player1Score += 1
             scorePlayer1.next()
-        }
-        else {
+        } else {
             player2Score += 1
             scorePlayer2.next()
         }
     }
 
     override fun getScore(): String = when {
-        isTied() -> tiedScore()
+        isTied() -> tiedScore(scorePlayer1)
         eitherPlayersOver40() -> finalScore()
         else -> runningGameScore()
     }
 
-    private fun tiedScore(): String =
-            when (player1Score) {
-                0 -> "Love-All"
-                1 -> "Fifteen-All"
-                2 -> "Thirty-All"
-                else -> "Deuce"
+    private fun tiedScore(score: Score): String =
+            if (score.isOverThirty()) {
+                "Deuce"
+            } else {
+                score.asString() + "-All"
             }
 
     private fun finalScore(): String = when {
@@ -49,7 +47,7 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
                 else -> ""
             }
 
-    private fun eitherPlayersOver40() = scorePlayer1.isOverForty()|| scorePlayer2.isOverForty()
+    private fun eitherPlayersOver40() = scorePlayer1.isOverForty() || scorePlayer2.isOverForty()
 
     private fun isTied() = scorePlayer1 == scorePlayer2
 }
@@ -68,5 +66,16 @@ data class Score(private var internal: Int = 0) {
     fun hasWonOver(other: Score): Boolean {
         return isOverForty() && (internal - other.internal) >= 2
     }
+
+    fun asString(): String =
+            when (internal) {
+                0 -> "Love"
+                1 -> "Fifteen"
+                2 -> "Thirty"
+                3 -> "Forty"
+                else -> ""
+            }
+
+    fun isOverThirty(): Boolean = internal >= 3
 
 }
