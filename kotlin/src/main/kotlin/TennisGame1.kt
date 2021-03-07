@@ -11,39 +11,40 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
     }
 
     override fun getScore(): String {
-        var score = ""
-        var tempScore = 0
         if (m_score1 == m_score2) {
-            when (m_score1) {
-                0 -> score = "Love-All"
-                1 -> score = "Fifteen-All"
-                2 -> score = "Thirty-All"
-                else -> score = "Deuce"
+            return when (m_score1) {
+                0 -> "Love-All"
+                1 -> "Fifteen-All"
+                2 -> "Thirty-All"
+                else -> "Deuce"
             }
-        } else if (m_score1 >= 4 || m_score2 >= 4) {
+        }
+        if (m_score1 >= 4 || m_score2 >= 4) {
             val minusResult = m_score1 - m_score2
-            if (minusResult == 1)
-                score = "Advantage $player1Name"
+            return if (minusResult == 1)
+                "Advantage $player1Name"
             else if (minusResult == -1)
-                score = "Advantage $player2Name"
+                "Advantage $player2Name"
             else if (minusResult >= 2)
-                score = "Win for $player1Name"
+                "Win for $player1Name"
             else
-                score = "Win for $player2Name"
-        } else {
-            for (i in 1..2) {
-                if (i == 1)
-                    tempScore = m_score1
-                else {
-                    score += "-"
-                    tempScore = m_score2
-                }
-                when (tempScore) {
-                    0 -> score += "Love"
-                    1 -> score += "Fifteen"
-                    2 -> score += "Thirty"
-                    3 -> score += "Forty"
-                }
+                "Win for $player2Name"
+        }
+
+        var score = ""
+        var tempScore: Int
+        for (i in 1..2) {
+            if (i == 1)
+                tempScore = m_score1
+            else {
+                score += "-"
+                tempScore = m_score2
+            }
+            when (tempScore) {
+                0 -> score += "Love"
+                1 -> score += "Fifteen"
+                2 -> score += "Thirty"
+                3 -> score += "Forty"
             }
         }
         return score
