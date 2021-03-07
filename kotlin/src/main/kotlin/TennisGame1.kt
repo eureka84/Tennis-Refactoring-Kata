@@ -37,7 +37,8 @@ data class Score(private var internal: Int = 0) {
         internal++
     }
 
-    fun isOverForty(): Boolean = internal >= 4
+    private fun isOverForty(): Boolean = internal >= 4
+
     fun hasAdvantageOver(other: Score): Boolean {
         return isOverForty() && (internal - other.internal) == 1
     }
