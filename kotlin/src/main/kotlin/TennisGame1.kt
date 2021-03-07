@@ -1,16 +1,12 @@
 class TennisGame1(private val player1Name: String, private val player2Name: String) : TennisGame {
 
-    private var player1Score: Int = 0
     private var scorePlayer1 = Score()
-    private var player2Score: Int = 0
     private var scorePlayer2 = Score()
 
     override fun wonPoint(playerName: String) {
         if (playerName === player1Name) {
-            player1Score += 1
             scorePlayer1.next()
         } else {
-            player2Score += 1
             scorePlayer2.next()
         }
     }
@@ -35,17 +31,7 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
         else -> "Win for $player2Name"
     }
 
-    private fun runningGameScore(): String =
-            "${scoreStringFor(player1Score)}-${scoreStringFor(player2Score)}"
-
-    private fun scoreStringFor(tempScore: Int) =
-            when (tempScore) {
-                0 -> "Love"
-                1 -> "Fifteen"
-                2 -> "Thirty"
-                3 -> "Forty"
-                else -> ""
-            }
+    private fun runningGameScore(): String = "${scorePlayer1.asString()}-${scorePlayer2.asString()}"
 
     private fun eitherPlayersOver40() = scorePlayer1.isOverForty() || scorePlayer2.isOverForty()
 
