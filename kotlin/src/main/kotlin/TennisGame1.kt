@@ -12,30 +12,23 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
     }
 
     override fun getScore(): String = when {
-        isTied() -> tiedScore(scorePlayer1)
-        eitherPlayersOver40() -> finalScore()
-        else -> runningGameScore()
-    }
-
-    private fun tiedScore(score: Score): String =
-            if (score.isOverThirty()) {
-                "Deuce"
-            } else {
-                score.asString() + "-All"
-            }
-
-    private fun finalScore(): String = when {
+        scorePlayer1 == scorePlayer2 -> tiedScore()
         scorePlayer1.hasAdvantageOver(scorePlayer2) -> "Advantage $player1Name"
         scorePlayer2.hasAdvantageOver(scorePlayer1) -> "Advantage $player2Name"
         scorePlayer1.hasWonOver(scorePlayer2) -> "Win for $player1Name"
-        else -> "Win for $player2Name"
+        scorePlayer2.hasWonOver(scorePlayer1) -> "Win for $player2Name"
+        else -> runningGameScore()
     }
+
+    private fun tiedScore() =
+            if (scorePlayer1.isOverThirty()) {
+                "Deuce"
+            } else {
+                scorePlayer1.asString() + "-All"
+            }
 
     private fun runningGameScore(): String = "${scorePlayer1.asString()}-${scorePlayer2.asString()}"
 
-    private fun eitherPlayersOver40() = scorePlayer1.isOverForty() || scorePlayer2.isOverForty()
-
-    private fun isTied() = scorePlayer1 == scorePlayer2
 }
 
 data class Score(private var internal: Int = 0) {
