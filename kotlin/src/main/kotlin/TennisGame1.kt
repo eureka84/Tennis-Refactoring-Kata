@@ -1,61 +1,26 @@
-class TennisGame1(private val player1Name: String, private val player2Name: String) : TennisGame {
+class TennisGame1(player1Name: String,player2Name: String) : TennisGame {
 
-    private var scorePlayer1 = Score()
-    private var scorePlayer2 = Score()
+    private var player1 = Player(player1Name)
+    private var player2 = Player(player2Name)
 
     override fun wonPoint(playerName: String) {
-        if (playerName === player1Name) {
-            scorePlayer1.next()
+        if (playerName === player1.name) {
+            player1.gainsPoint()
         } else {
-            scorePlayer2.next()
+            player2.gainsPoint()
         }
     }
 
     override fun getScore(): String = when {
-        scorePlayer1 == scorePlayer2 -> tiedScore()
-        scorePlayer1.hasAdvantageOver(scorePlayer2) -> "Advantage $player1Name"
-        scorePlayer2.hasAdvantageOver(scorePlayer1) -> "Advantage $player2Name"
-        scorePlayer1.hasWonOver(scorePlayer2) -> "Win for $player1Name"
-        scorePlayer2.hasWonOver(scorePlayer1) -> "Win for $player2Name"
-        else -> runningGameScore()
+        player1.hasSamePointsOf(player2) -> tiedScore()
+        player1.hasAdvantageOver(player2) -> "Advantage ${player1.name}"
+        player2.hasAdvantageOver(player1) -> "Advantage ${player2.name}"
+        player1.hasWonOver(player2) -> "Win for ${player1.name}"
+        player2.hasWonOver(player1) -> "Win for ${player2.name}"
+        else -> "${player1.points}-${player2.points}"
     }
 
-    private fun tiedScore() =
-            if (scorePlayer1.isOverThirty()) {
-                "Deuce"
-            } else {
-                scorePlayer1.asString() + "-All"
-            }
-
-    private fun runningGameScore(): String = "${scorePlayer1.asString()}-${scorePlayer2.asString()}"
+    private fun tiedScore() = if (player1.hasOverThirtyPoints()) "Deuce" else "${player1.points}-All"
 
 }
 
-data class Score(private var internal: Int = 0) {
-
-    fun next() {
-        internal++
-    }
-
-    private fun isOverForty(): Boolean = internal >= 4
-
-    fun hasAdvantageOver(other: Score): Boolean {
-        return isOverForty() && (internal - other.internal) == 1
-    }
-
-    fun hasWonOver(other: Score): Boolean {
-        return isOverForty() && (internal - other.internal) >= 2
-    }
-
-    fun asString(): String =
-            when (internal) {
-                0 -> "Love"
-                1 -> "Fifteen"
-                2 -> "Thirty"
-                3 -> "Forty"
-                else -> ""
-            }
-
-    fun isOverThirty(): Boolean = internal >= 3
-
-}
