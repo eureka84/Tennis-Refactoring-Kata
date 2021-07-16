@@ -6,6 +6,8 @@ data class Points(private var internal: Int = 0) {
 
     fun areOverForty(): Boolean = internal >= 4
 
+    fun areOverThirty(): Boolean = internal >= 3
+
     operator fun minus(other: Points): Int = internal - other.internal
 
     override fun toString(): String =
@@ -14,9 +16,7 @@ data class Points(private var internal: Int = 0) {
                 1 -> "Fifteen"
                 2 -> "Thirty"
                 3 -> "Forty"
-                else -> ""
+                else -> "Over Forty"
             }
-
-    fun areOverThirty(): Boolean = internal >= 3
 
 }
