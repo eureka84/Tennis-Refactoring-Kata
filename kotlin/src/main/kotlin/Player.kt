@@ -4,11 +4,11 @@ data class Player(val name: String, val points: Points = Points()) {
         points.next()
     }
 
-    fun hasSamePointsOf(player2: Player): Boolean = points == player2.points
+    fun hasSamePointsOf(other: Player): Boolean = points == other.points
 
-    fun hasAdvantageOver(player2: Player): Boolean = points.areOverForty() && (points - player2.points) == 1
+    fun hasAdvantageOver(other: Player): Boolean = points.areOverForty() && (points - other.points) == 1
 
-    fun hasWonOver(player2: Player): Boolean = points.areOverForty() && (points - player2.points) >= 2
+    fun hasWonOver(other: Player): Boolean = points.areOverForty() && (points - other.points) >= 2
 
     fun hasOverFortyPoints(): Boolean = points.areOverForty()
 }
