@@ -1,7 +1,7 @@
 class TennisGame1(player1Name: String,player2Name: String) : TennisGame {
 
-    private var player1 = Player(player1Name)
-    private var player2 = Player(player2Name)
+    private val player1 = Player(player1Name)
+    private val player2 = Player(player2Name)
 
     override fun wonPoint(playerName: String) {
         if (playerName === player1.name) {
