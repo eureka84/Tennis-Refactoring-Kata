@@ -20,8 +20,8 @@ class TennisGame1(player1Name: String,player2Name: String) : TennisGame {
 
     private fun Player.mayHaveWonOver(other: Player): String =
         when {
-            this.hasAdvantageOver(other) ->  "Advantage ${this.name}"
-            this.hasWonOver(other) -> "Win for ${this.name}"
+            this.hasOnePointMoreThan(other) ->  "Advantage ${this.name}"
+            this.hasOverOnePointMoreThan(other) -> "Win for ${this.name}"
             else -> other.mayHaveWonOver(this)
         }
 
