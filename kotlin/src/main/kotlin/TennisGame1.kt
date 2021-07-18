@@ -12,17 +12,17 @@ class TennisGame1(player1Name: String,player2Name: String) : TennisGame {
     }
 
     override fun getScore(): String = when {
-        player1.hasSamePointsOf(player2) -> playersHaveTiedScoreOf(player1.points)
-        player1.hasOverFortyPoints() -> player1.mayHaveWonOver(player2)
-        player2.hasOverFortyPoints() -> player2.mayHaveWonOver(player1)
+        player1 hasSamePointsOf player2 -> playersHaveTiedScoreOf(player1.points)
+        player1.hasOverFortyPoints() -> player1 mayHaveWonOver player2
+        player2.hasOverFortyPoints() -> player2 mayHaveWonOver player1
         else -> "${player1.points}-${player2.points}"
     }
 
-    private fun Player.mayHaveWonOver(other: Player): String =
+    private infix fun Player.mayHaveWonOver(other: Player): String =
         when {
-            this.hasOnePointMoreThan(other) ->  "Advantage ${this.name}"
-            this.hasOverOnePointMoreThan(other) -> "Win for ${this.name}"
-            else -> other.mayHaveWonOver(this)
+            this hasOnePointMoreThan other ->  "Advantage ${this.name}"
+            this hasOverOnePointMoreThan other -> "Win for ${this.name}"
+            else -> other mayHaveWonOver this
         }
 
     private fun playersHaveTiedScoreOf(points: Points) =
