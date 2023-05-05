@@ -11,10 +11,14 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
 	}
 
 	override fun getScore(): String = when {
-		player1Score == player2Score -> drawScore()
-		player1Score.isOver40() || player2Score.isOver40() -> advantagesScore()
+		isDraw() -> drawScore()
+		anyHasAdvantage() -> advantagesScore()
 		else -> "${getScoreName(player1Score)}-${getScoreName(player2Score)}"
 	}
+
+	private fun anyHasAdvantage() = player1Score.isOver40() || player2Score.isOver40()
+
+	private fun isDraw() = player1Score == player2Score
 
 	private fun getScoreName(tempScore: Int) = when (tempScore) {
 		0 -> "Love"
