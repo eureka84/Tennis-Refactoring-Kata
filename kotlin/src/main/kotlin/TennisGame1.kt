@@ -15,16 +15,8 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
         var tempScore = 0
         if (player1Score == player2Score) {
             score = drawScore()
-        } else if (player1Score >= 4 || player2Score >= 4) {
-            val minusResult = player1Score - player2Score
-            if (minusResult == 1)
-                score = "Advantage player1"
-            else if (minusResult == -1)
-                score = "Advantage player2"
-            else if (minusResult >= 2)
-                score = "Win for player1"
-            else
-                score = "Win for player2"
+        } else if (player1Score.isOver40() || player2Score.isOver40()) {
+            score = advantagesScore()
         } else {
             for (i in 1..2) {
                 if (i == 1)
@@ -43,6 +35,18 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
         }
         return score
     }
+
+    private fun advantagesScore(): String {
+        val scoreDifference = player1Score - player2Score
+        return when {
+            scoreDifference == 1 -> "Advantage player1"
+            scoreDifference >= 2 -> "Win for player1"
+            scoreDifference == -1 -> "Advantage player2"
+            else -> "Win for player2"
+        }
+    }
+
+    private fun Int.isOver40() = this >= 4
 
     private fun drawScore(): String = when (player1Score) {
         0 -> "Love-All"
