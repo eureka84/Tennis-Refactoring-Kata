@@ -14,12 +14,7 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
         var score = ""
         var tempScore = 0
         if (player1Score == player2Score) {
-            when (player1Score) {
-                0 -> score = "Love-All"
-                1 -> score = "Fifteen-All"
-                2 -> score = "Thirty-All"
-                else -> score = "Deuce"
-            }
+            score = drawScore()
         } else if (player1Score >= 4 || player2Score >= 4) {
             val minusResult = player1Score - player2Score
             if (minusResult == 1)
@@ -47,5 +42,12 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
             }
         }
         return score
+    }
+
+    private fun drawScore(): String = when (player1Score) {
+        0 -> "Love-All"
+        1 -> "Fifteen-All"
+        2 -> "Thirty-All"
+        else -> "Deuce"
     }
 }
