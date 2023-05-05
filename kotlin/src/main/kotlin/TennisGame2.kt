@@ -5,15 +5,15 @@ class TennisGame2(private val player1Name: String, private val player2Name: Stri
     var P1res: String = ""
     var P2res: String = ""
 
+
     override fun getScore(): String {
         var score = ""
         if (P1point == P2point && P1point < 4) {
-            if (P1point == 0)
-                score = "Love"
-            if (P1point == 1)
-                score = "Fifteen"
-            if (P1point == 2)
-                score = "Thirty"
+            when (P1point) {
+              0 -> score = "Love"
+              1 -> score = "Fifteen"
+              2 -> score = "Thirty"
+            }
             score += "-All"
         }
         if (P1point == P2point && P1point >= 3)
