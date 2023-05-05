@@ -12,28 +12,22 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
 
     override fun getScore(): String {
         var score = ""
-        var tempScore = 0
         if (player1Score == player2Score) {
             score = drawScore()
         } else if (player1Score.isOver40() || player2Score.isOver40()) {
             score = advantagesScore()
         } else {
-            for (i in 1..2) {
-                if (i == 1)
-                    tempScore = player1Score
-                else {
-                    score += "-"
-                    tempScore = player2Score
-                }
-                when (tempScore) {
-                    0 -> score += "Love"
-                    1 -> score += "Fifteen"
-                    2 -> score += "Thirty"
-                    3 -> score += "Forty"
-                }
-            }
+            score = "${getScoreName(player1Score)}-${getScoreName(player2Score)}"
         }
         return score
+    }
+
+    private fun getScoreName(tempScore: Int) = when (tempScore) {
+        0 -> "Love"
+        1 -> "Fifteen"
+        2 -> "Thirty"
+        3 -> "Forty"
+        else -> throw IllegalArgumentException("Temp score cannot be greater than 3")
     }
 
     private fun advantagesScore(): String {
